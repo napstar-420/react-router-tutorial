@@ -43,7 +43,10 @@ export default function Root() {
               name="q"
               defaultValue={q}
               onChange={(e) => {
-                submit(e.currentTarget.form)
+                const isFirstSearch = q == null;
+                submit(e.currentTarget.form, {
+                    replace: !isFirstSearch,
+                })
               }}
             />
             <div id="search-spinner" aria-hidden hidden={!searching} />
