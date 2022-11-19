@@ -1,9 +1,13 @@
-import { Link, Outlet, useLoaderData } from "react-router-dom";
-import { getContacts } from "../contact";
+import { Link, Outlet, useLoaderData, Form } from "react-router-dom";
+import { getContacts, createContact } from "../contact";
 
 export async function loader() {
   const contacts = await getContacts();
   return { contacts };
+}
+
+export async function action() {
+  await createContact();
 }
 
 export default function Root() {
@@ -24,25 +28,27 @@ export default function Root() {
             <div id="search-spinner" aria-hidden hidden={true} />
             <div className="sr-only" aria-live="polite"></div>
           </form>
-          <form method="post">
+          <Form method="post">
             <button type="submit">New</button>
-          </form>
+          </Form>
         </div>
         <nav>
           {contacts.length ? (
             contacts.map((contact) => {
-              <li key={contact.id}>
-                <Link to={`contacts/${contact.id}`}>
-                  {contact.first || contact.last ? (
-                    <>
-                      {contact.first} {contact.last}
-                    </>
-                  ) : (
-                    <i>No Name</i>
-                  )}{" "}
-                  {contact.favorite && <span>★</span>}
-                </Link>
-              </li>;
+              return (
+                <li key={contact.id}>
+                  <Link to={`contacts/${contact.id}`}>
+                    {contact.first || contact.last ? (
+                      <>
+                        {contact.first} {contact.last}
+                      </>
+                    ) : (
+                      <i>No Name</i>
+                    )}{" "}
+                    {contact.favorite && <span>★</span>}
+                  </Link>
+                </li>
+              );
             })
           ) : (
             <p>
