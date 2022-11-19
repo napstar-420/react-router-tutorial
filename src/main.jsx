@@ -8,13 +8,21 @@ import {
 import Root from './routes/root';
 import './index.css';
 import ErrorPage from './error-page';
+import Contact from './routes/contact';
+import { Children } from 'react';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
-    errorElement: <ErrorPage />
-  }
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: 'contacts/:id',
+        element: <Contact />
+      }
+    ]
+  },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
