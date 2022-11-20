@@ -14,6 +14,12 @@ export async function action({request, params}) {
 
 export default function Contact() {
   const contact = useLoaderData();
+  if (!contact) {
+    throw new Response("", {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
   return (
     <div id="contact">
       <div>
